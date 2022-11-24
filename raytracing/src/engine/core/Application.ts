@@ -1,6 +1,6 @@
 
 namespace NanoRayTracing{
-    interface AppSpecification{
+    export interface AppSpecification{
         name:string,
         version:string,
     }
@@ -9,8 +9,6 @@ namespace NanoRayTracing{
     export class Application{
         private m_Specification:AppSpecification;
 		private m_Running:boolean = false;
-		private m_LastFrameTime:number = 0.0;
-
 
 
         constructor(){
