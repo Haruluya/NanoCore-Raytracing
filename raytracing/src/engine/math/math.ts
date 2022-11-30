@@ -441,3 +441,10 @@ const translation3d = (tx:number, ty:number, tz:number, dst?:Float32Array)=>{
 const translate3d = (m:Float32Array, tx:number, ty:number, tz:number, dst?:Float32Array)=>{
     return matrixMutiply(m, translation3d(tx, ty, tz), dst);
 }
+
+
+export const clamp = (x:number, min:number,max:number) =>{
+    if (x < min) return min;
+    if (x > max) return max;
+    return x;
+}

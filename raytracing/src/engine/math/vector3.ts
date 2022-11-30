@@ -42,6 +42,11 @@ export class Vector3{
     toIntVec(){
         return new Vector3(Math.floor(this.X),Math.floor(this.Y),Math.floor(this.Z))
     }
+    length(){
+        return Math.sqrt(this.X*this.X + this.Y*this.Y + this.Z*this.Z)
+    }
+
+
     [Symbol.iterator]() { 
         let index = 0,target = this;
         return { 
