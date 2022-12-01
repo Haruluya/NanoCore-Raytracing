@@ -35,14 +35,11 @@ export const draw_point_by_uv = (
 
     const pixelIndex = (x+y*imgData.width)*4;
     //Gamma Correction. 
+    
 
-    // color.X = (Math.sqrt(color.X));
-    // color.Y = (Math.sqrt(color.X));
-    // color.Z = (Math.sqrt(color.X));
-    console.log(color)
-    pixelData[pixelIndex+0] = color.X;
-    pixelData[pixelIndex+1] = color.Y;
-    pixelData[pixelIndex+2] = color.Z;
+    pixelData[pixelIndex+0] = color.X *255;
+    pixelData[pixelIndex+1] = color.Y *255;
+    pixelData[pixelIndex+2] = color.Z *255;
     pixelData[pixelIndex+3] = 255;
 
 }

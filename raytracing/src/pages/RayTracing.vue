@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref,onMounted} from 'vue';
-import { vec3Normalize } from '../engine/math/math';
+import { vec3Mutiply, vec3Normalize } from '../engine/math/math';
 
 import { Vector3 } from '../engine/math/vector3';
 import { resize_canvas_to_display_size, draw_point_by_uv,  } from '../engine/utils/RenderUtils';
@@ -15,7 +15,9 @@ import Hitable from '../engine/core/Hitable';
 import HitableList from '../engine/components/HitableList';
 import Sphere from '../engine/components/Sphere';
 import Camera from '../engine/components/Camera';
-import { math_random_number, random_in_unit_sphere } from '../engine/utils/Random';
+import { math_random_number, random_in_hemisphere, random_in_unit_sphere, random_unit_vector } from '../engine/utils/Random';
+import Lambertian from '../engine/components/Lambertian';
+import Metal from '../engine/components/Metal';
 
 
 
@@ -49,8 +51,15 @@ export default defineComponent({
       max_depth = 50;
       // World
       world = new HitableList();
-      world.add(new Sphere(new Vector3(0,0,-1),.5));
-      world.add(new Sphere(new Vector3(0,-100.5,-1), 100));
+      const material_ground = new Lambertian(new Vector3(0.8, 0.8, 0.0));
+      const material_center = new Lambertian(new Vector3(0.7, 0.3, 0.3));
+      const material_left   = new Metal(new Vector3(0.8, 0.8, 0.8));
+      const material_right  = new Metal(new Vector3(0.8, 0.6, 0.2));
+
+      world.add(new Sphere(new Vector3( 0.0, -100.5, -1.0), 100.0, material_ground));
+      world.add(new Sphere(new Vector3( 0.0,    0.0, -1.0),   0.5, material_center));
+      world.add(new Sphere(new Vector3(-1.0,    0.0, -1.0),   0.5, material_left));
+      world.add(new Sphere(new Vector3( 1.0,    0.0, -1.0),   0.5, material_right));
 
 
       // Camera
@@ -91,8 +100,15 @@ export default defineComponent({
         return new Vector3(0,0,0);
       const {hit,rec} = world.hit(ray,0.001,Infinity)
       if(hit){
-        const target = rec.p.add(rec.normal).add(random_in_unit_sphere());
-        return  ray_color(new Ray(rec.p, target.sub(rec.p)), world,depth-1).mutiply(.5);
+        // const target = rec.p.add(rec.normal) .add(random_unit_vector());
+        // const target = rec.p.add(rec.normal).add(random_in_unit_sphere());
+        // const target = rec.p.add(rec.normal).add(random_in_hemisphere(rec.normal));
+        // return  ray_color(new Ray(rec.p, target.sub(rec.p)), world,depth-1).mutiply(.5);
+        const {scatter,attenuation,scattered} = rec.material.scatter(ray, rec)
+
+        if (scatter)
+            return vec3Mutiply(attenuation,(ray_color(scattered, world, depth-1)));
+        return new Vector3(0,0,0);
       }
       const unit_direction = vec3Normalize(ray.direction);
       const t = (unit_direction.Y+1.) *.5

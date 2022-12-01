@@ -1,5 +1,6 @@
 import { vec3Dot } from "../math/math";
 import { Vector3 } from "../math/vector3";
+import Material from "./Material";
 import Ray from "./Ray";
 
 export default class Hitrecord{
@@ -7,8 +8,12 @@ export default class Hitrecord{
     private m_normal:Vector3;
     private m_t:number;
     private m_front_face:boolean = true;
+    private m_material:Material;
 
-    constructor(p:Vector3 = new Vector3(0,0,0),normal:Vector3 = new Vector3(0,0,0),t:number = 0){
+    constructor(p:Vector3 = new Vector3(0,0,0),
+                normal:Vector3 = new Vector3(0,0,0),
+                t:number = 0
+    ){
         this.m_p = p; this.m_normal = normal; this.m_t = t;
     }
     public set_face_normal(r:Ray, outward_normal:Vector3) {
@@ -25,6 +30,9 @@ export default class Hitrecord{
     get normal():Vector3{
         return this.m_normal;
     }
+    get material():Material{
+        return this.m_material;
+    }
     set normal(normal:Vector3){
         this.m_normal = normal;
     }
@@ -34,5 +42,9 @@ export default class Hitrecord{
     set t(t:number){
         this.m_t = t;
     }
+    set material(m:Material){
+        this.m_material = m;
+    }
+
     
 }

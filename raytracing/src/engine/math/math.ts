@@ -448,3 +448,20 @@ export const clamp = (x:number, min:number,max:number) =>{
     if (x > max) return max;
     return x;
 }
+
+
+
+export const vec3NearZero = (v:Vector3)=>{
+    const s = 1e-8;
+    return (Math.abs(v[0]) < s) && (Math.abs(v[1]) < s) && (Math.abs(v[2]) < s);
+}
+
+
+
+export const vec3Reflect = (v:Vector3, n:Vector3)=>{
+    return v.sub(n.mutiply(2*vec3Dot(v,n)));
+}
+
+export const vec3Mutiply = (v:Vector3,v1:Vector3)=>{
+    return new Vector3(v[0]*v1[0],v[1]*v1[1],v[2]*v1[2]);
+}
