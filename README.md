@@ -7,7 +7,7 @@ A basic soft renderer based on typescript.
 
 **Location:**
 
-https://haruluya.github.io/NanoCore-SoftRenderer
+https://haruluya.github.io/NanoCore-Raytracing
 
 ![Logo](./Document/images/Logo.png)
 
