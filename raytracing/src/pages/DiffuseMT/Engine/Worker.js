@@ -50,7 +50,6 @@ self.onmessage = function (event) {
 
     let offset = 0;
     if(startX == width/2 && startY == height/2){offset = -width/2}
-    else if(startX == 0 && startY == height/2){offset = width/2}
 
     // 处理图像数据
     const colorData = new Uint8ClampedArray((endX - startX) * (endY - startY)*4);

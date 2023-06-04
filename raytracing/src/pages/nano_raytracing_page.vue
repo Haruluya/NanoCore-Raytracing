@@ -172,7 +172,7 @@ export default defineComponent({
             return {
                 handleClick: () => {
                     window.location.href =
-                        "https://github.com/Haruluya/NanoCore-SoftRenderer/tree/master/SoftRenderer/src/pages/"+this.prop_des_data.name+"/index.vue";
+                        "https://github.com/Haruluya/NanoCore-Raytracing/tree/master/raytracing/src/pages/"+props.prop_des_data.name+"/"+props.prop_des_data.name+".vue";
                 },
                 showDebugPanel: () => {
                     showDebug.value = !showDebug.value;

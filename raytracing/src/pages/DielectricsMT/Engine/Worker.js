@@ -44,7 +44,6 @@ self.onmessage = function (event) {
     world.add(new Cylinder(vec3Add(circleCenter,[.3,-.1,0]),radius,.2,new Metal([.8,.6,.2],1)));
     let offset = 0;
     if(startX == width/2 && startY == height/2){offset = -width/2}
-    else if(startX == 0 && startY == height/2){offset = width/2}
     // 处理图像数据
     const colorData = new Uint8ClampedArray((endX - startX) * (endY - startY)*4);
     for (let x = startX; x < endX; x++) {

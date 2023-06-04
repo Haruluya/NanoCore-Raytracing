@@ -1,5 +1,5 @@
 # NanoCore-Raytracing
-A basic soft renderer based on typescript.
+A basic raytracing demo based on web.
 
 ### Introduction 
 
@@ -19,6 +19,12 @@ The "R" word in "nanocore world".
 git clone https://github.com/Haruluya/NanoCore-Raytracing.git
 ```
 
+
+
 ### Presentation
+
+<img src="F:\Note-Haruluya\Project\NanoCore-Raytracing\assets\image-20230604202351952.png" alt="image-20230604202351952" style="zoom:80%;" />
+
+
 
 ![image-20221113170409729](./Document/images/page.png)
