@@ -1,1 +1,0 @@
-const o=3.141592653589793,n=(t,r)=>t!=null&&r!=null?t+(r-t)*Math.random():Math.random(),a=(t,r)=>t&&r?[n(t,r),n(t,r),n(t,r)]:[n(),n(),n()],s=()=>{for(;;){let t=a(-1,1);if(!(Math.pow(t[0]*t[0]+t[1]*t[1]+t[2]*t[2],2)>=1))return t}},u=()=>{const t=n(0,2*o),r=n(-1,1),e=Math.sqrt(1-r*r);return[e*Math.cos(t),e*Math.sin(t),r]};export{u as a,n as m,s as r};

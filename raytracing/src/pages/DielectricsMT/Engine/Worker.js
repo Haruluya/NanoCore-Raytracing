@@ -42,10 +42,13 @@ self.onmessage = function (event) {
     world.add(new Sphere(vec3Add(circleCenter,vec3Sub([.5,.5,1],[.5,.5,1])),radius+.05,new Dielectrics(1.5)))
     world.add(new Box(vec3Sub(circleCenter,[.4,.1,0]),vec3Add(circleCenter,[radius-.3,radius,radius]),new Lambertian([.8,.8,.8])));
     world.add(new Cylinder(vec3Add(circleCenter,[.3,-.1,0]),radius,.2,new Metal([.8,.6,.2],1)));
-      // 处理图像数据
+    let offset = 0;
+    if(startX == width/2 && startY == height/2){offset = -width/2}
+    else if(startX == 0 && startY == height/2){offset = width/2}
+    // 处理图像数据
     const colorData = new Uint8ClampedArray((endX - startX) * (endY - startY)*4);
     for (let x = startX; x < endX; x++) {
-        const u = (x + 0.5) * du;
+        const u = (x + 0.5 + offset) * du;
         for (let y = startY; y < endY; y++) {
         const v = (y + 0.5) * dv;
         pixel_color = [0, 0, 0];

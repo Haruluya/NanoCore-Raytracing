@@ -166,8 +166,8 @@ export default defineComponent({
                     return [255*(1-.5*t),255*(1-.3*t),255];
                 }
             }
-
             r.setOrigin(origin)
+            let count = 0;
             if(!sectionParams.use_worker) {
                 //——————{trace
                 const du = 1/width, dv = 1/height;
@@ -190,13 +190,11 @@ export default defineComponent({
             }else{
                 lastTime = Date.now();
                 for (let i = 0; i < numWorkers; i++) {
-                    // 监听 Web Worker 的消息
                     workers[i].onmessage = function (event) {
                         const { partImageData, startX, startY,endX,endY } = event.data;
-                        // 合并 imgData 数据到 mergedImageData
                         for(let x = startX; x < endX; x++){
                             for(let y = startY; y < endY; y++){
-                                const sourceIndex = (y * width + x) * 4;
+                                const sourceIndex = (y * imgData.width + x) * 4;
                                 const dataIndex = ((y-startY)*(endX-startX)+x-startX)*4;
                                 imgData.data[sourceIndex] = partImageData[dataIndex]; // R
                                 imgData.data[sourceIndex + 1] = partImageData[(dataIndex + 1)]; // G
@@ -204,15 +202,15 @@ export default defineComponent({
                                 imgData.data[sourceIndex + 3] = partImageData[(dataIndex + 3)]; // A
                             }
                         }
-                        ctx?.putImageData(imgData, 0, 0);
                         page.value.debugLog("Worker FPS", 1000 / (Date.now() - lastTime));
-                        
+                        count++;
+                        ctx?.putImageData(imgData, 0, 0);
                     };
 
-                    const startX = (i % 2) * (canvas.width / 2);
-                    const startY = i < 2 ?0 :1 * (canvas.height / 2);
-                    const endX = startX + canvas.width / 2;
-                    const endY = startY + canvas.height / 2;
+                    const startX = Math.floor((i % 2) * (canvas.width / 2));
+                    const startY = Math.floor((i < 2 ?0 :1) * (canvas.height / 2));
+                    const endX = Math.floor(startX + canvas.width / 2);
+                    const endY = Math.floor(startY + canvas.height / 2);
 
                     workers[i].postMessage({
                         width,

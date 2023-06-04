@@ -204,10 +204,10 @@ export default defineComponent({
                         page.value.debugLog("Worker FPS", 1000 / (Date.now() - lastTime));
                     };
 
-                    const startX = (i % 2) * (canvas.width / 2);
-                    const startY = i < 2 ?0 :1 * (canvas.height / 2);
-                    const endX = startX + canvas.width / 2;
-                    const endY = startY + canvas.height / 2;
+                    const startX = Math.floor((i % 2) * (canvas.width / 2));
+                    const startY = Math.floor((i < 2 ?0 :1) * (canvas.height / 2));
+                    const endX = Math.floor(startX + canvas.width / 2);
+                    const endY = Math.floor(startY + canvas.height / 2);
 
                     workers[i].postMessage({
                         width,

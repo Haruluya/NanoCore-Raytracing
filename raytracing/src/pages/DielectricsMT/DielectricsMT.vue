@@ -185,11 +185,8 @@ export default defineComponent({
             }else{
                 lastTime = Date.now();
                 for (let i = 0; i < numWorkers; i++) {
-                    // 监听 Web Worker 的消息
                     workers[i].onmessage = function (event) {
-
                         const { partImageData, startX, startY,endX,endY } = event.data;
-                        // 合并 imgData 数据到 mergedImageData
                         for(let x = startX; x < endX; x++){
                             for(let y = startY; y < endY; y++){
                                 const sourceIndex = (y * width + x) * 4;
@@ -204,10 +201,10 @@ export default defineComponent({
                         page.value.debugLog("Worker FPS", 1000 / (Date.now() - lastTime));
                     };
 
-                    const startX = (i % 2) * (canvas.width / 2);
-                    const startY = i < 2 ?0 :1 * (canvas.height / 2);
-                    const endX = startX + canvas.width / 2;
-                    const endY = startY + canvas.height / 2;
+                    const startX = Math.floor((i % 2) * (canvas.width / 2));
+                    const startY = Math.floor((i < 2 ?0 :1) * (canvas.height / 2));
+                    const endX = Math.floor(startX + canvas.width / 2);
+                    const endY = Math.floor(startY + canvas.height / 2);
 
                     workers[i].postMessage({
                         width,
