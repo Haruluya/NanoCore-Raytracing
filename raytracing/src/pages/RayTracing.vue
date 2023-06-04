@@ -1,12 +1,13 @@
-<template>
-    <div id="RayTracing">
-        <canvas class="show" ref="canvas" :width="canvasWidth" :height="canvasHeight"/>
-    </div>
+<!-- <template>
+  <nano_raytracing_page 
+      :prop_des_data="desData" 
+      ref="page" 
+  /> 
 </template>
 <script lang="ts">
 import { defineComponent, ref,onMounted} from 'vue';
-import { vec3Mutiply, vec3Normalize } from '../engine/math/math';
-
+import { vec3Mutiply, vec3Normalize } from '../engine/math/Vectors';
+import nano_raytracing_page from './nano_raytracing_page.vue'
 import { Vector3 } from '../engine/math/vector3';
 import { resize_canvas_to_display_size, draw_point_by_uv,  } from '../engine/utils/RenderUtils';
 import Ray from '../engine/core/Ray';
@@ -14,16 +15,27 @@ import Hitrecord from '../engine/core/Hitrecord';
 import Hitable from '../engine/core/Hitable';
 import HitableList from '../engine/components/HitableList';
 import Sphere from '../engine/components/Sphere';
-import Camera from '../engine/components/Camera';
+import Camera from '../engine/engine-ts/Camera';
 import { math_random_number, random_in_hemisphere, random_in_unit_sphere, random_unit_vector } from '../engine/utils/Random';
 import Lambertian from '../engine/components/Lambertian';
 import Metal from '../engine/components/Metal';
+import Dielectric from '../engine/engine-ts/Dielectric';
 
-
+const desData = {
+    category: "Raytracing",
+    name: "Raytracing",
+    buttonContent: "查看源码",
+    title: "Raytracing",
+    content: "Raytracing."
+}
 
 export default defineComponent({
   name: 'RayTracing',
+  components:{nano_raytracing_page},
   setup(){
+    //store. 
+    const page = ref();
+
     // const engine:Application = new Application();
     let canvasWidth = ref<number>(800);
     let canvasHeight = ref<number>(800);
@@ -52,9 +64,12 @@ export default defineComponent({
       // World
       world = new HitableList();
       const material_ground = new Lambertian(new Vector3(0.8, 0.8, 0.0));
-      const material_center = new Lambertian(new Vector3(0.7, 0.3, 0.3));
-      const material_left   = new Metal(new Vector3(0.8, 0.8, 0.8));
-      const material_right  = new Metal(new Vector3(0.8, 0.6, 0.2));
+      // const material_center = new Lambertian(new Vector3(0.7, 0.3, 0.3));
+      // const material_left   = new Metal(new Vector3(0.8, 0.8, 0.8),0.3);
+      const material_center = new Dielectric(1.5);
+      const material_left   = new Dielectric(1.5);
+      
+      const material_right  = new Metal(new Vector3(0.8, 0.6, 0.2),1.0);
 
       world.add(new Sphere(new Vector3( 0.0, -100.5, -1.0), 100.0, material_ground));
       world.add(new Sphere(new Vector3( 0.0,    0.0, -1.0),   0.5, material_center));
@@ -117,9 +132,11 @@ export default defineComponent({
     }
 
     onMounted(()=>{
-        init();
+        // init();
     })
     return{
+      desData,
+      page,
       canvasWidth,
       canvasHeight,
       canvas,
@@ -128,11 +145,5 @@ export default defineComponent({
 })
 </script>
 <style lang="less" scoped>
-canvas{
-  width: 800;
-  height: 800;
-  margin: 0 auto;
-  margin-top: 100px;
-  background-color: seashell;
-}
-</style>
+
+</style> -->
