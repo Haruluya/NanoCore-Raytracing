@@ -1,9 +1,11 @@
-import {vec3MutiplyVec3,vec3Add,vec3Normalize} from '../../../engine/math/Vectors'
+import {vec3MutiplyVec3,vec3Add,vec3Sub,vec3Normalize} from '../../../engine/math/Vectors'
 import {math_random_number} from '../../../engine/math/Random'
 import Ray from './Ray'
 import { hit_record } from "./Hittable";
 import hittable_list from "./HittableList"
 import Sphere from "./Sphere"
+import Box from "./Box"
+import Cylinder from './Cylinder'
 import Lambertian from './Lambertian';
 import Metal from './Metal';
 import Dielectrics from './Dielectrics'
@@ -36,9 +38,9 @@ self.onmessage = function (event) {
     let r = new Ray(origin, origin);
     //world.
     world.clear();
-    world.add(new Sphere(vec3Add(bgCircleCenter,vec3Sub(origin,[.5,.5,1])),100,new Lambertian([.8,.8,0])))
-    world.add(new Sphere(vec3Add(circleCenter,vec3Sub(origin,[.5,.5,1])),radius,new Lambertian([0.7,0.3,.3])))
-    world.add(new Box(vec3Sub(circleCenter,[.4,.1,0]),vec3Add(circleCenter,[radius-.3,radius,radius]),new Metal([.8,.8,.8],1)));
+    world.add(new Sphere(vec3Add(bgCircleCenter,vec3Sub([.5,.5,1],[.5,.5,1])),100,new Lambertian([.8,.8,0])))
+    world.add(new Sphere(vec3Add(circleCenter,vec3Sub([.5,.5,1],[.5,.5,1])),radius+.05,new Dielectrics(1.5)))
+    world.add(new Box(vec3Sub(circleCenter,[.4,.1,0]),vec3Add(circleCenter,[radius-.3,radius,radius]),new Lambertian([.8,.8,.8])));
     world.add(new Cylinder(vec3Add(circleCenter,[.3,-.1,0]),radius,.2,new Metal([.8,.6,.2],1)));
       // 处理图像数据
     const colorData = new Uint8ClampedArray((endX - startX) * (endY - startY)*4);

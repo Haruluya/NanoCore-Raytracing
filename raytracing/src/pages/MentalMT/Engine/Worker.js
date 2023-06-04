@@ -1,4 +1,4 @@
-import {vec3MutiplyVec3,vec3Add,vec3Normalize} from '../../../engine/math/Vectors'
+import {vec3MutiplyVec3,vec3Sub,vec3Add,vec3Normalize} from '../../../engine/math/Vectors'
 import {math_random_number} from '../../../engine/math/Random'
 import Ray from './Ray'
 import { hit_record } from "./Hittable";

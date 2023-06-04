@@ -97,7 +97,7 @@ export default defineComponent({
             )
             page.value.addUIItem(
                 { 
-                    type: "slider", id: "samples_per_pixel", value: sectionParams.samples_per_pixel, min: 1, max: 50, 
+                    type: "slider", id: "samples_per_pixel", value: sectionParams.samples_per_pixel, min: 1, max: 100, 
                     callback: uiSetting.globalUiCallbacks.updateVector3(sectionParams,page.value.Render,"samples_per_pixel") 
                 },
             )
